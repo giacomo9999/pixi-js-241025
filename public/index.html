@@ -8,30 +8,49 @@
         <title>Learning Pixi</title>
     </head>
     <body>
-        <div class="stage-container"></div>
-
         <script type="module">
             const app = new PIXI.Application()
             await app.init({ width: 640, height: 360 })
-            const introParagraph = document.querySelector('.stage-container')
-            introParagraph.appendChild(app.canvas)
+
+            document.body.appendChild(app.canvas)
+
+            const container = new PIXI.Container({
+                x: app.screen.width / 2,
+                y: app.screen.height / 2,
+            })
+
+            app.stage.addChild(container)
 
             await PIXI.Assets.load('sample.png')
-            let sprite = PIXI.Sprite.from('sample.png')
-            app.stage.addChild(sprite)
 
-            // Add a variable to count up the seconds our demo has been running
+            const sprites = []
+            let parent = container
+            for (let i = 0; i < 3; i++) {
+                let wrapper = new PIXI.Container()
+                let sprite = PIXI.Sprite.from('sample.png')
+                sprite.anchor.set(0.5)
+                wrapper.addChild(sprite)
+                parent.addChild(wrapper)
+                sprites.push(wrapper)
+                parent = wrapper
+            }
+
             let elapsed = 0.0
-            // Tell our application's ticker to run a new callback every frame, passing
-            // in the amount of time that has passed since the last tick
-            app.ticker.add((ticker) => {
-                // Add the time to our total elapsed time
-                elapsed += ticker.deltaTime
-                // Update the sprite's X position based on the cosine of our elapsed time.  We divide
-                // by 50 to slow the animation down a bit...
-                sprite.x = 100.0 + Math.cos(elapsed / 50.0) * 100.0
+            app.ticker.add((delta) => {
+                elapsed += delta.deltaTime / 60
+                const amount = Math.sin(elapsed)
+                const scale = 1.0 + 0.25 * amount
+                const alpha = 0.75 + 0.25 * amount
+                const angle = 40 * amount
+                const x = 75 * amount
+                for (let i = 0; i < sprites.length; i++) {
+                    const sprite = sprites[i]
+                    sprite.scale.set(scale)
+                    sprite.alpha = alpha
+                    sprite.angle = angle
+                    sprite.x = x
+                }
             })
         </script>
-        <!-- <script type="text/javascript" src="index.js"></script> -->
     </body>
 </html>
