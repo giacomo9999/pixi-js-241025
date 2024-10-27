@@ -3,3 +3,5 @@ This repo will document my attempts to learn Pixi.js (an open source, web-based 
 25 Oct 2024: Initialized repo. In the interest of keeping the whole thing as simple as possible, I bypassed NPM and used a simple Node file (named hello.js) to serve the pages.  (I pretty much copy-pasted one from here--
 https://dev.to/dipakahirav/part-5-building-a-simple-web-server-with-nodejs-14em
 --because it was faster than typing out all the error-handling and filepath-concatenating stuff on my own.  So thanks to Mr Dipak Ahirav for writing it.)
+
+27 Oct 2024: Fooling around with styling.

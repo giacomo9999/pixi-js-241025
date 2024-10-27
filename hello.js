@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 
 const server = http.createServer((req, res) => {
-    console.log('Req:', req.url)
+    console.log('Request', req.url)
     let filePath = path.join(
         __dirname,
         'public',
